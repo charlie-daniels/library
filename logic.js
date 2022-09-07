@@ -32,3 +32,27 @@ function displayBooks() {
   });
 }
 
+function showCreateBookMenu() {
+  const menu = document.querySelector('.hidden');
+  menu.classList.remove('hidden');
+}
+
+function createBook(event) {
+
+}
+
+function assignListeners() {
+  const newBookButton = document.querySelector('#new-book');
+  newBookButton.addEventListener('click', showCreateBookMenu);
+} assignListeners();
+
+// tests
+ 
+function addTestBooks() {
+  addBookToLibrary('Twilight', 'Linda Mcartney', 501, false);
+  addBookToLibrary('An Idiot Abroad', 'Carl Pilkington', 227, false)
+  addBookToLibrary('A Brief History of Time', 'Stephen Hawking', 365, false)
+}
+
+addTestBooks();
+displayBooks();

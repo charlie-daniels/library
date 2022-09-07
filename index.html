@@ -13,6 +13,25 @@
     <div class="books">
 
     </div>
+    
+    <div id="menu-create" class="hidden">
+      <div class="background">
+
+      </div>
+      <div class="menu">
+        <form>
+          <label for="title" >Title<input id="title" type="text"></label>
+          <label for="author">Author<input id="author" type="text"></label>
+          <label for="page-count">Page count<input id="page-count" type="number"></label>
+          <div id="read-options">
+            <label for="is-read">Read<input id="is-read" type="radio" name="read"></label>
+            <label for="is-not-read">Unread<input id="is-not-read" type="radio" name="read" checked></label>
+          </div>
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+    <button id="new-book">New book</button>
   </div>
 </body>
 </html>
