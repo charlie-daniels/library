@@ -25,9 +25,17 @@ function displayBooks() {
     const bookInfo = document.createElement('p');
     bookInfo.textContent = b.info();
     
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', (e) => {
+      myLibrary.splice(e.currentTarget.parentNode.dataset.index, 1);
+      displayBooks();
+    });
+    
     const newTile = document.createElement('div');
-    newTile.classList.add('book', `data-index=${index}`);
-    newTile.appendChild(bookInfo)
+    newTile.classList.add('book');
+    newTile.setAttribute('data-index', index);
+    newTile.append(bookInfo, deleteButton);
 
     container.appendChild(newTile);
   });
