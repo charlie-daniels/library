@@ -58,7 +58,6 @@ ul {
   width: 60vw;
   height: 90vh;
   background: hsl(0, 0%, 25%);
-  border: 2px solid black;
   border-radius: var(--global-border-radius);
 }
 #menu-create form {
@@ -76,7 +75,7 @@ ul {
 
 /* Custom inputs */
 
-input {
+input, label > h2 {
   font-size: 4rem;
   height: 6rem;
   width: 100%;
@@ -92,9 +91,16 @@ input[type='radio'] {
   margin: 0 .5rem;
   border-radius: 50%;
 }
-input[type='submit'] {
-  font-size: 2rem;
+input[type='radio']:checked {
+  box-shadow: 0 0 0 4px hsl(0, 0%, 35%) inset,
+              0 0 0 10px white inset;
 }
-label {
+input[type='submit'] {
+  max-height: 2em;
   font-size: 1.5rem;
+}
+label > h2 {
+  display: inline;
+  font-size: 1.5rem;
+  border: none;
 }
