@@ -11,6 +11,9 @@ function Book(title, author, pages, isRead) {
         if (this.isRead) return info += 'unread';
         return info += 'read';
     };
+    this.toggleReadStatus = () => {
+      this.isRead = !this.isRead;
+    }
 }
 
 function addBookToLibrary(title, author, pages, isRead) {
@@ -18,9 +21,12 @@ function addBookToLibrary(title, author, pages, isRead) {
   myLibrary.push(newBook);
 }
 
-function displayBooks() {
-  const container = document.querySelector('.books');
-  container.innerHTML = ''; // Clear previous set of tiles
+function toggleReadStatusText(book, target) {
+  if (book.isRead) target.textContent = 'Unread';
+  else target.textContent = 'Read';
+}
+
+function createBookTile(container) {
   myLibrary.map((b, index) => {
     const bookInfo = document.createElement('p');
     bookInfo.textContent = b.info();
@@ -31,14 +37,28 @@ function displayBooks() {
       myLibrary.splice(e.currentTarget.parentNode.dataset.index, 1);
       displayBooks();
     });
+
+    const toggleButton = document.createElement('button');
+    toggleReadStatusText(b, toggleButton);
+    toggleButton.addEventListener('click', () => {
+      b.toggleReadStatus();
+      toggleReadStatusText(b, toggleButton);
+      displayBooks();
+    });
     
     const newTile = document.createElement('div');
     newTile.classList.add('book');
     newTile.setAttribute('data-index', index);
-    newTile.append(bookInfo, deleteButton);
+    newTile.append(bookInfo, deleteButton, toggleButton);
 
     container.appendChild(newTile);
   });
+}
+
+function displayBooks() {
+  const container = document.querySelector('.books');
+  container.innerHTML = ''; // Clear previous set of tiles
+  createBookTile(container);
 }
 
 function toggleNewBookMenu() {
@@ -71,13 +91,11 @@ function assignListeners() {
   submitNewBook.addEventListener('submit', createNewBook, false)
 } assignListeners();
 
-// tests
- 
-function addTestBooks() {
+function addPresetBooks() {
   addBookToLibrary('Twilight', 'Linda Mcartney', 501, false);
   addBookToLibrary('An Idiot Abroad', 'Karl Pilkington', 227, false)
   addBookToLibrary('A Brief History of Time', 'Stephen Hawking', 365, false)
 }
 
-addTestBooks();
+addPresetBooks();
 displayBooks();
