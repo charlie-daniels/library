@@ -7,9 +7,10 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead;
 
     this.info = () => {
-        let info = `${this.title} by ${this.author}, ${this.pages} pages, `;
-        if (this.isRead) return info += 'unread';
-        return info += 'read';
+      let info = [this.title,' ' ,this.author, `${this.pages} pages`];
+      if (this.isRead) info.push('Unread');
+      else info.push('Read');
+      return info;
     };
     this.toggleReadStatus = () => {
       this.isRead = !this.isRead;
@@ -22,14 +23,19 @@ function addBookToLibrary(title, author, pages, isRead) {
 }
 
 function toggleReadStatusText(book, target) {
-  if (book.isRead) target.textContent = 'Unread';
-  else target.textContent = 'Read';
+  if (book.isRead) target.textContent = 'Finish';
+  else target.textContent = 'Unfinish';
 }
 
 function createBookTile(container) {
   myLibrary.map((b, index) => {
-    const bookInfo = document.createElement('p');
-    bookInfo.textContent = b.info();
+    const info = b.info();
+    const bookInfo = document.createElement('div');
+    info.forEach(line => {
+      const bookLine = document.createElement('p');
+      bookLine.textContent = line;
+      bookInfo.appendChild(bookLine);
+    });
     
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -45,7 +51,7 @@ function createBookTile(container) {
       toggleReadStatusText(b, toggleButton);
       displayBooks();
     });
-    
+
     const newTile = document.createElement('div');
     newTile.classList.add('book');
     newTile.setAttribute('data-index', index);
@@ -89,6 +95,9 @@ function assignListeners() {
 
   const submitNewBook = document.querySelector('#new-book-form');
   submitNewBook.addEventListener('submit', createNewBook, false)
+
+  const resetReturn = document.querySelector('#return');
+  resetReturn.addEventListener('click', toggleNewBookMenu, false);
 } assignListeners();
 
 function addPresetBooks() {

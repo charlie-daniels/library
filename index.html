@@ -5,15 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
   <script src="logic.js" defer></script>
   <title>Library</title>
 </head>
 <body>
   <div class="container">
-    <div class="books">
-
+    <div class="header">
+      <img id="logo" src="images/logo.svg"></svg>
+      <h1>e<span>-</span>library</h1>
     </div>
-    
+    <div class="books">
+    </div>
     <div id="menu-create" class="hidden">
       <div class="background">
       </div>
@@ -21,15 +24,15 @@
         <form id="new-book-form">
           <label for="title">
             <h2>Title</h2>
-            <input id="title" name="title" type="text">
+            <input id="title" name="title" type="text" required>
           </label>
           <label for="author">
             <h2>Author</h2>
-            <input id="author" name="author" type="text">
+            <input id="author" name="author" type="text" required>
           </label>
           <label for="page-count">
             <h2>Page count</h2>
-            <input id="page-count" name="page-count" type="number">
+            <input id="page-count" name="page-count" type="number" required>
           </label>
           <div id="read-options">
             <label for="is-read">
@@ -41,7 +44,8 @@
               <input id="is-not-read" type="radio" name="read" checked>
             </label>
           </div>
-          <input id='submit-book' type="submit">
+          <input id="submit-book" type="submit">
+          <input id="return" type="reset" value="Return">
         </form>
       </div>
     </div>
