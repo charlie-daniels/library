@@ -1,20 +1,21 @@
 let myLibrary = [];
 
-function Book(title, author, pages, isRead) {
+class Book {
+  constructor(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
-
-    this.info = () => {
-      let info = [this.title,' ' ,this.author, `${this.pages} pages`];
-      if (this.isRead) info.push('Unread');
-      else info.push('Read');
-      return info;
-    };
-    this.toggleReadStatus = () => {
-      this.isRead = !this.isRead;
-    }
+  }
+  info() {
+    let info = [this.title,' ' ,this.author, `${this.pages} pages`];
+    if (this.isRead) info.push('Unread');
+    else info.push('Read');
+    return info;
+  };
+  toggleReadStatus() {
+    this.isRead = !this.isRead;
+  }
 }
 
 function addBookToLibrary(title, author, pages, isRead) {
