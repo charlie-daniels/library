@@ -76,10 +76,10 @@ function toggleNewBookMenu() {
 
 function createNewBook(e) {
   const formData = new FormData(e.target);
-  console.log(formData.get('title'));
 
   let isRead = false;
   if (document.getElementById('#is-read:checked') == null) isRead = true;
+
   addBookToLibrary(
     formData.get('title'),
     formData.get('author'),
@@ -90,18 +90,14 @@ function createNewBook(e) {
 
 function assignListeners() {
   const newBookButton = document.querySelector('#new-book');
-  newBookButton.addEventListener('click', toggleNewBookMenu, false);
-
+  newBookButton.addEventListener('click', toggleNewBookMenu);
   const resetReturn = document.querySelector('#return');
-  resetReturn.addEventListener('click', toggleNewBookMenu, false);
-
+  resetReturn.addEventListener('click', toggleNewBookMenu);
 
   // Form validation
-
-  const isNotEmpty = (e, elems) => {
-    e.preventDefault();
+  const isNotEmpty = (e, ...args) => {
     let noneEmpty = true;
-    elems.forEach(el => {
+    args.forEach(el => {
       if (el.validity.valueMissing) {
         el.setCustomValidity('Field must not be empty.');
         el.reportValidity();
@@ -111,24 +107,23 @@ function assignListeners() {
       }
     });
     if (noneEmpty) {
-      toggleNewBookMenu();
       createNewBook(e);
       e.currentTarget.reset();
+      toggleNewBookMenu();
       displayBooks();
     }
   }
 
   const submitNewBook = document.querySelector('#new-book-form');
   submitNewBook.addEventListener('submit', (e) => {
+    e.preventDefault();
     isNotEmpty(
       e,
-      [
       document.getElementById('title'),
       document.getElementById('author'),
       document.getElementById('page-count')
-      ]
     );
-  }, false)
+  })
 }
 
 function addPresetBooks() {
