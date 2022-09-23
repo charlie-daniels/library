@@ -75,31 +75,61 @@ function toggleNewBookMenu() {
 }
 
 function createNewBook(e) {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
+  const formData = new FormData(e.target);
+  console.log(formData.get('title'));
+
   let isRead = false;
-  if (document.querySelector('#is-read:checked') == null) isRead = true;
+  if (document.getElementById('#is-read:checked') == null) isRead = true;
   addBookToLibrary(
     formData.get('title'),
     formData.get('author'),
     Number(formData.get('page-count')),
     isRead
   );
-  displayBooks();
-  e.currentTarget.reset();
-  toggleNewBookMenu();
 }
 
 function assignListeners() {
   const newBookButton = document.querySelector('#new-book');
   newBookButton.addEventListener('click', toggleNewBookMenu, false);
 
-  const submitNewBook = document.querySelector('#new-book-form');
-  submitNewBook.addEventListener('submit', createNewBook, false)
-
   const resetReturn = document.querySelector('#return');
   resetReturn.addEventListener('click', toggleNewBookMenu, false);
-} assignListeners();
+
+
+  // Form validation
+
+  const isNotEmpty = (e, elems) => {
+    e.preventDefault();
+    let noneEmpty = true;
+    elems.forEach(el => {
+      if (el.validity.valueMissing) {
+        el.setCustomValidity('Field must not be empty.');
+        el.reportValidity();
+        noneEmpty = false;
+      } else {
+        el.setCustomValidity('');
+      }
+    });
+    if (noneEmpty) {
+      toggleNewBookMenu();
+      createNewBook(e);
+      e.currentTarget.reset();
+      displayBooks();
+    }
+  }
+
+  const submitNewBook = document.querySelector('#new-book-form');
+  submitNewBook.addEventListener('submit', (e) => {
+    isNotEmpty(
+      e,
+      [
+      document.getElementById('title'),
+      document.getElementById('author'),
+      document.getElementById('page-count')
+      ]
+    );
+  }, false)
+}
 
 function addPresetBooks() {
   addBookToLibrary('Twilight', 'Linda Mcartney', 501, false);
@@ -107,5 +137,10 @@ function addPresetBooks() {
   addBookToLibrary('A Brief History of Time', 'Stephen Hawking', 365, false)
 }
 
-addPresetBooks();
-displayBooks();
+function init() {
+  assignListeners();
+  addPresetBooks();
+  displayBooks();
+}
+
+init();
